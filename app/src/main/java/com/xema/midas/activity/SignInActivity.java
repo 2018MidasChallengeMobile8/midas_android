@@ -16,4 +16,9 @@ public class SignInActivity extends AppCompatActivity {
 
         Log.d("git test", "1");
     }
+
+    private void get()
+    {
+        
+    }
 }
