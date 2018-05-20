@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 @Keep
 public interface AccountService {
     @GET("/add_user/")
-    Call<String> checkEmailDuplicated(@Query("id") String id, @Query("pw") String passWord);
+    Call<String> signUp(@Query("id") String id, @Query("pw") String passWord);
 }

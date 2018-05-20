@@ -4,13 +4,11 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
-public class OkHttpGenerator {
+class OkHttpGenerator {
 
-    public static OkHttpClient getInstance(boolean isDebug) {
+    static OkHttpClient getInstance(boolean isDebug) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 //.retryOnConnectionFailure(false)
                 .readTimeout(60, TimeUnit.SECONDS)

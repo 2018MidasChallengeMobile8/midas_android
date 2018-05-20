@@ -6,7 +6,7 @@ import com.xema.midas.BuildConfig;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
+class RetrofitClient {
     //테스트서버
     private static final String BASE_URL = "http://192.168.0.79:8181/";
 
