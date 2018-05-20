@@ -18,4 +18,5 @@ public class BaseApplication extends Application {
         if (BuildConfig.DEBUG)
             Stetho.initializeWithDefaults(this);
     }
+
 }
