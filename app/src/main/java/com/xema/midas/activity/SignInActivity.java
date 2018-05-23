@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xema.midas.R;
+import com.xema.midas.common.PreferenceHelper;
+import com.xema.midas.model.ApiResult;
 import com.xema.midas.model.Profile;
 import com.xema.midas.network.ApiUtil;
 import com.xema.midas.util.CommonUtils;
@@ -50,6 +51,15 @@ public class SignInActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initListeners();
+
+        //자동로그인
+        if (PreferenceHelper.loadAutoSignInEnabled(this)) {
+            attemptSignIn(PreferenceHelper.loadId(this), PreferenceHelper.loadPw(this));
+        } else {
+            String id = PreferenceHelper.loadId(this);
+            if (id != null) edtId.setText(id);
+            edtPassword.requestFocus();
+        }
     }
 
     private void initListeners() {
@@ -102,52 +112,70 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-
     private void attemptAction(View view) {
         String id = edtId.getText().toString();
         String password = edtPassword.getText().toString();
 
-        if (cbAutoSignIn.getVisibility() == View.GONE) {
-            ApiUtil.getAccountService().signUp(id, password).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                    if (response.code() == 200) {
-                        // TODO: 2018-05-23 회원가입 성공 처리
-                        Toast.makeText(SignInActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SignInActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+        if (isSignUpMode()) {
+            attemptSignUp(id, password);
         } else {
-            ApiUtil.getAccountService().signIn(id, password).enqueue(new Callback<Profile>() {
-                @Override
-                public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
-                    if (response.code() == 200) {
-                        // TODO: 2018-05-23  로그인 성공 처리
-                        Log.d("response comment", response.body().getComment());
-                        Log.d("response image", response.body().getProfileImage());
-                        Log.d("response comment", response.body().getName());
-                    } else {
-                        Toast.makeText(SignInActivity.this, getString(R.string.error_common), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+            attemptSignIn(id, password);
         }
     }
 
+    private void attemptSignIn(String id, String password) {
+        ApiUtil.getAccountService().signIn(id, password).enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                if (response.code() == 200) {
+                    PreferenceHelper.saveAutoSignInEnabled(SignInActivity.this, cbAutoSignIn.isChecked());
+                    PreferenceHelper.saveId(SignInActivity.this, id);
+                    PreferenceHelper.savePw(SignInActivity.this, password);
+
+                    Profile profile = response.body();
+                    if (profile == null) return;
+                    PreferenceHelper.saveMyProfile(SignInActivity.this, profile);
+                } else {
+                    Toast.makeText(SignInActivity.this, "아이디 혹은 패스워드가 다릅니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                Toast.makeText(SignInActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void attemptSignUp(String id, String password) {
+        ApiUtil.getAccountService().signUp(id, password).enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(SignInActivity.this, "회원가입 되었습니다.", Toast.LENGTH_SHORT).show();
+                    changeSignInPage();
+                    edtId.setText(id);
+                    edtPassword.setText(password);
+                    btnAction.requestFocus();
+                } else {
+                    Toast.makeText(SignInActivity.this, "이미 존재하는 아이디입니다.\n다른 아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(SignInActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean isSignUpMode() {
+        return cbAutoSignIn.getVisibility() == View.GONE;
+    }
+
     private void convertPageMode(View view) {
-        if (cbAutoSignIn.getVisibility() == View.GONE) {
+        if (isSignUpMode()) {
             changeSignInPage();
         } else {
             changeSignUpPage();
