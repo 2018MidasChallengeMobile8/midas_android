@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+
+                <com.xema.midas.widget.GrayScaleImageView
+                    android:id="@+id/giv_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile_default" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#b0181818" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="60dp">
+
+                        <!--
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="82dp"
+                            android:layout_height="82dp"
+                            android:layout_gravity="center"
+                            android:src="@color/colorWhite"
+                            app:riv_border_color="@color/colorGray5"
+                            app:riv_border_width="1px"
+                            app:riv_corner_radius="80dp" />
+                            -->
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/iv_circle"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_profile_default"
+                            app:riv_border_color="@color/colorGray8"
+                            app:riv_border_width="1dp"
+                            app:riv_corner_radius="80dp"
+                            tools:ignore="ContentDescription" />
+
+                        <ImageView
+                            android:id="@+id/iv_edit_profile_image"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="end|bottom"
+                            android:background="@drawable/shape_circle_gray"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_edit_white"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

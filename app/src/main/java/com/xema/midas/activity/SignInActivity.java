@@ -1,5 +1,6 @@
 package com.xema.midas.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import com.xema.midas.model.ApiResult;
 import com.xema.midas.model.Profile;
 import com.xema.midas.network.ApiUtil;
 import com.xema.midas.util.CommonUtils;
+import com.xema.midas.util.LoadingProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,9 +126,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void attemptSignIn(String id, String password) {
+        LoadingProgressDialog.showProgress(this);
         ApiUtil.getAccountService().signIn(id, password).enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                LoadingProgressDialog.hideProgress();
                 if (response.code() == 200) {
                     PreferenceHelper.saveAutoSignInEnabled(SignInActivity.this, cbAutoSignIn.isChecked());
                     PreferenceHelper.saveId(SignInActivity.this, id);
@@ -135,6 +139,10 @@ public class SignInActivity extends AppCompatActivity {
                     Profile profile = response.body();
                     if (profile == null) return;
                     PreferenceHelper.saveMyProfile(SignInActivity.this, profile);
+
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(SignInActivity.this, "아이디 혹은 패스워드가 다릅니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -143,14 +151,17 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
                 Toast.makeText(SignInActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+                LoadingProgressDialog.hideProgress();
             }
         });
     }
 
     private void attemptSignUp(String id, String password) {
+        LoadingProgressDialog.showProgress(this);
         ApiUtil.getAccountService().signUp(id, password).enqueue(new Callback<ApiResult>() {
             @Override
             public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+                LoadingProgressDialog.hideProgress();
                 if (response.code() == 200) {
                     Toast.makeText(SignInActivity.this, "회원가입 되었습니다.", Toast.LENGTH_SHORT).show();
                     changeSignInPage();
@@ -164,8 +175,8 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
-                t.printStackTrace();
                 Toast.makeText(SignInActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+                LoadingProgressDialog.hideProgress();
             }
         });
     }
