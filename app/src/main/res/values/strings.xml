@@ -6,4 +6,7 @@
     <string name="common_sign_in">로그인</string>
     <string name="common_sign_up">회원가입</string>
     <string name="common_auto_sign_in">자동로그인</string>
+
+    <string name="error_network">서버와의 통신에 실패했습니다. 잠시후 다시 시도해주세요.</string>
+    <string name="error_common">알 수 없는 에러가 발생했습니다. 잠시후 다시 시도해주세요.</string>
 </resources>

@@ -1,22 +1,30 @@
 package com.xema.midas.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xema.midas.R;
+import com.xema.midas.model.Profile;
+import com.xema.midas.network.ApiUtil;
 import com.xema.midas.util.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -100,9 +108,41 @@ public class SignInActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString();
 
         if (cbAutoSignIn.getVisibility() == View.GONE) {
-            // TODO: 2018-05-20 회원가입 액션
+            ApiUtil.getAccountService().signUp(id, password).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.code() == 200) {
+                        // TODO: 2018-05-23 회원가입 성공 처리
+                        Toast.makeText(SignInActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SignInActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         } else {
-            // TODO: 2018-05-20 로그인 액션
+            ApiUtil.getAccountService().signIn(id, password).enqueue(new Callback<Profile>() {
+                @Override
+                public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                    if (response.code() == 200) {
+                        // TODO: 2018-05-23  로그인 성공 처리
+                        Log.d("response comment", response.body().getComment());
+                        Log.d("response image", response.body().getProfileImage());
+                        Log.d("response comment", response.body().getName());
+                    } else {
+                        Toast.makeText(SignInActivity.this, getString(R.string.error_common), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         }
     }
 

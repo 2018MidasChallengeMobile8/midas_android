@@ -4,7 +4,9 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 class OkHttpGenerator {
 
@@ -19,13 +21,13 @@ class OkHttpGenerator {
         }
 
         // Connection : close 로 설정
-        //Interceptor interceptor = chain -> {
-        //    Request original = chain.request();
-        //    Request.Builder requestBuilder = original.newBuilder().addHeader("Connection", "close"); // keep-alive 해제
-        //    Request request = requestBuilder.build();
-        //    return chain.proceed(request);
-        //};
-        //builder.addInterceptor(interceptor);
+        Interceptor interceptor = chain -> {
+            Request original = chain.request();
+            Request.Builder requestBuilder = original.newBuilder().addHeader("Connection", "close"); // keep-alive 해제
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
+        };
+        builder.addInterceptor(interceptor);
 
 
         return builder.build();
