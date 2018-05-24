@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Profile {
     private String name;
-    @SerializedName("profile_image")
+    @SerializedName("photo_url")
     private String profileImage;
     private String comment;
 
