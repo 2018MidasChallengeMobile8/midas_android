@@ -25,7 +25,7 @@
                 <com.xema.midas.widget.GrayScaleImageView
                     android:id="@+id/giv_background"
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
+                    android:layout_height="280dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_profile_default" />
 
@@ -82,6 +82,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="16dp"
                         android:maxLines="1"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
                         android:text="USERNAME"
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp"
@@ -94,7 +96,10 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:ellipsize="end"
-                        android:maxLines="1"
+                        android:gravity="center"
+                        android:maxLines="5"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
                         android:text="자기소개가 등록되지 않았습니다."
                         android:textColor="@color/colorWhite"
                         android:textSize="13sp" />
