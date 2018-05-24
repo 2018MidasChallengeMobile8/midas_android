@@ -1,6 +1,5 @@
 package com.xema.midas.fragment;
 
-import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,14 +15,21 @@ import com.xema.midas.R;
 import com.xema.midas.adapter.ListCardAdapter;
 import com.xema.midas.databinding.FragmentListBinding;
 import com.xema.midas.model.ListCardItems;
+import com.xema.midas.model.Posts;
+import com.xema.midas.network.RestClient;
+import com.xema.midas.network.service.AccountService;
 
 import java.util.ArrayList;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends android.support.v4.app.Fragment {
     private FragmentListBinding binding;
     private RecyclerView.Adapter mAdapter;
     private RequestManager mRequestManager;
     private ArrayList<ListCardItems> listCardItems;
+    private ArrayList<Posts> post_list;
+    private AccountService service;
+    private RestClient<AccountService> restClient;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -45,7 +51,7 @@ public class ListFragment extends Fragment {
     {
         setList();
         mRequestManager = Glide.with(this);
-        mAdapter = new ListCardAdapter(listCardItems,mRequestManager);
+        mAdapter = new ListCardAdapter(post_list,mRequestManager);
         binding.listRecycle.setHasFixedSize(true);
 
         binding.listRecycle.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -54,13 +60,26 @@ public class ListFragment extends Fragment {
 
     private void setList()
     {
-        listCardItems.clear();
-        listCardItems = new ArrayList<>();
+//        listCardItems.clear();
+        post_list = new ArrayList<>();
+        post_list.add(new Posts("제목제목제목이다","내용내용이다","https://st.depositphotos.com/1029110/2779/v/950/depositphotos_27794673-stock-illustration-money-icons-set.jpg"));
+        post_list.add(new Posts("제목제목제목이다","내용내용이다","https://st.depositphotos.com/1029110/2779/v/950/depositphotos_27794673-stock-illustration-money-icons-set.jpg"));
+        post_list.add(new Posts("제목제목제목이다","내용내용이다","https://st.depositphotos.com/1029110/2779/v/950/depositphotos_27794673-stock-illustration-money-icons-set.jpg"));
+        post_list.add(new Posts("제목제목제목이다","내용내용이다","https://st.depositphotos.com/1029110/2779/v/950/depositphotos_27794673-stock-illustration-money-icons-set.jpg"));
+        /*Call<ArrayList<Posts>> call = service.getPosts(1,1);
 
-        listCardItems.add(new ListCardItems("제목제목제목","내용내용니용","2018-01-01",
-                "http://cfile23.uf.tistory.com/image/2657B9505809B4B634FF66"));
-        listCardItems.add(new ListCardItems("제목제목제목","내용내용니용","2018-01-01",
-                "http://cfile23.uf.tistory.com/image/2657B9505809B4B634FF66"));
-        mAdapter.notifyDataSetChanged();
+        call.enqueue(new Callback<ArrayList<Posts>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Posts>> call, Response<ArrayList<Posts>> response) {
+                post_list.addAll(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Posts>> call, Throwable t) {
+                Log.d("list_frag",t.getMessage());
+            }
+        });*/
+
+//       mAdapter.notifyDataSetChanged();
     }
 }

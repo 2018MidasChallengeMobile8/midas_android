@@ -11,12 +11,8 @@ import com.xema.midas.adapter.ListPageAdapter;
 import com.xema.midas.databinding.ActivityListBinding;
 
 public class ListActivity extends AppCompatActivity {
-
-
     private ActivityListBinding binding;
     private PagerAdapter pagerAdapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +22,14 @@ public class ListActivity extends AppCompatActivity {
 
         pagerAdapter = new ListPageAdapter(getSupportFragmentManager());
         binding.listViewpager.setAdapter(pagerAdapter);
-        /*binding.listTab.addTab(binding.listTab.newTab().setText("one"));
-        binding.listTab.addTab(binding.listTab.newTab().setText("two"));*/
+        binding.listTab.addTab(binding.listTab.newTab().setText("one"));
+        binding.listTab.addTab(binding.listTab.newTab().setText("two"));
         binding.listTab.setupWithViewPager(binding.listViewpager);
         binding.listViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.listTab));
+        /*List<Fragment> listFragments = new ArrayList<>();
+        listFragments.add(new ListFragment());
+        listFragments.add(new BlankFragment());*/
+
 
         //setRecyclerView();
     }
