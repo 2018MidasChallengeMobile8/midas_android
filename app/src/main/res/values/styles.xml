@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorGray2</item>
@@ -11,4 +11,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TabStyle">
+        <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="FloatingActionButtonStyle">
+        <item name="colorAccent">@color/colorGray1</item>
+    </style>
 </resources>

@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Midas</string>
 
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec feugiat in fermentum posuere urna nec tincidunt praesent. Libero id faucibus nisl tincidunt eget. Ut morbi tincidunt augue interdum velit euismod in pellentesque. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Sit amet aliquam id diam maecenas ultricies mi eget. Netus et malesuada fames ac turpis egestas integer eget aliquet. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Nullam vehicula ipsum a arcu cursus vitae. Libero id faucibus nisl tincidunt eget. Sit amet nulla facilisi morbi tempus. Id neque aliquam vestibulum morbi blandit cursus. Eget dolor morbi non arcu risus.
+
+Montes nascetur ridiculus mus mauris vitae ultricies leo integer. Pulvinar etiam non quam lacus suspendisse faucibus interdum posuere lorem. Gravida rutrum quisque non tellus orci. Sed euismod nisi porta lorem. Sit amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar. Sagittis eu volutpat odio facilisis mauris sit. Vulputate mi sit amet mauris commodo quis imperdiet massa. Aliquam sem et tortor consequat id. Amet commodo nulla facilisi nullam. Aliquet lectus proin nibh nisl condimentum id venenatis a condimentum. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit.
+
+Elit at imperdiet dui accumsan. Consequat nisl vel pretium lectus quam id leo in. At erat pellentesque adipiscing commodo elit at imperdiet. Cras tincidunt lobortis feugiat vivamus at augue. Massa ultricies mi quis hendrerit dolor magna eget est. Orci porta non pulvinar neque laoreet. Mattis vulputate enim nulla aliquet porttitor. Tincidunt augue interdum velit euismod in pellentesque massa. Justo nec ultrices dui sapien eget mi. Nisl tincidunt eget nullam non. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. In ornare quam viverra orci. Nibh mauris cursus mattis molestie a iaculis at. Lobortis elementum nibh tellus molestie nunc non blandit massa. Adipiscing commodo elit at imperdiet dui accumsan sit. Eget magna fermentum iaculis eu non. Congue mauris rhoncus aenean vel elit scelerisque mauris. In arcu cursus euismod quis viverra nibh cras.</string>
+
     <string name="common_id">아이디</string>
     <string name="common_password">비밀번호</string>
     <string name="common_sign_in">로그인</string>

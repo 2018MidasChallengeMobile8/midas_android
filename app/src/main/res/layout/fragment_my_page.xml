@@ -6,17 +6,21 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/abl_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBlack">
+                android:background="@color/colorBlack"
+                app:layout_collapseMode="parallax">
 
                 <com.xema.midas.widget.GrayScaleImageView
                     android:id="@+id/giv_background"
@@ -28,29 +32,25 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#b0181818" />
+                    android:background="#a4000000" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="60dp">
+                        android:layout_gravity="center">
 
-                        <!--
                         <com.makeramen.roundedimageview.RoundedImageView
-                            android:layout_width="82dp"
-                            android:layout_height="82dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:layout_gravity="center"
-                            android:src="@color/colorWhite"
-                            app:riv_border_color="@color/colorGray5"
-                            app:riv_border_width="1px"
+                            android:src="@color/colorGray8"
                             app:riv_corner_radius="80dp" />
-                            -->
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/iv_circle"
@@ -71,13 +71,73 @@
                             android:layout_gravity="end|bottom"
                             android:background="@drawable/shape_circle_gray"
                             android:padding="3dp"
-                            android:src="@drawable/ic_edit_white"
+                            app:srcCompat="@drawable/ic_edit_white"
                             tools:ignore="ContentDescription" />
                     </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:maxLines="1"
+                        android:text="USERNAME"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="자기소개가 등록되지 않았습니다."
+                        android:textColor="@color/colorWhite"
+                        android:textSize="13sp" />
                 </LinearLayout>
             </FrameLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:paddingBottom="12dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="lorem_ipsum"
+                android:textColor="@color/colorGray2"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/lorem_ipsum" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new Fragment();
                     break;
                 case 1:
+                    fragment = new Fragment();
+                    break;
+                case 2:
+                    fragment = new Fragment();
+                    break;
+                case 3:
                     fragment = mMyPageFragment;
                     break;
                 default:
@@ -70,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0) return "리스트";
-            else if (position == 1) return "마이페이지";
+            if (position == 0) return "HOME";
+            else if (position == 1) return "GALLERY";
+            else if (position == 2) return "CHART";
+            else if (position == 3) return "MYPAGE";
             else return "";
         }
     }

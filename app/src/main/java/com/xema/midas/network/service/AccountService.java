@@ -7,6 +7,8 @@ import com.xema.midas.model.Profile;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -24,4 +26,12 @@ public interface AccountService {
     @Multipart
     @POST("/change_profile_image/")
     Call<ApiResult> uploadProfileImage(@Part MultipartBody.Part id, @Part MultipartBody.Part pw, @Part MultipartBody.Part profileImage);
+
+    @FormUrlEncoded
+    @POST("/change_profile_name/")
+    Call<ApiResult> changeProfileName(@Field("id") String id, @Field("pw") String pw, @Field("name") String name);
+
+    @FormUrlEncoded
+    @POST("/change_profile_comment/")
+    Call<ApiResult> changeProfileComment(@Field("id") String id, @Field("pw") String pw, @Field("comment") String comment);
 }
