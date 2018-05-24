@@ -3,6 +3,7 @@ package com.xema.midas.network.service;
 import android.support.annotation.Keep;
 
 import com.xema.midas.model.ApiResult;
+import com.xema.midas.model.Photo;
 import com.xema.midas.model.Profile;
 
 import okhttp3.MultipartBody;
@@ -25,7 +26,7 @@ public interface AccountService {
 
     @Multipart
     @POST("/change_profile_image/")
-    Call<ApiResult> uploadProfileImage(@Part MultipartBody.Part id, @Part MultipartBody.Part pw, @Part MultipartBody.Part profileImage);
+    Call<Photo> uploadProfileImage(@Part MultipartBody.Part id, @Part MultipartBody.Part pw, @Part MultipartBody.Part profileImage);
 
     @FormUrlEncoded
     @POST("/change_profile_name/")

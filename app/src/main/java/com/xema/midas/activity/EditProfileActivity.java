@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.xema.midas.R;
 import com.xema.midas.common.GlideApp;
 import com.xema.midas.common.PreferenceHelper;
 import com.xema.midas.model.ApiResult;
+import com.xema.midas.model.Photo;
 import com.xema.midas.model.Profile;
 import com.xema.midas.network.ApiUtil;
 import com.xema.midas.util.LoadingProgressDialog;
@@ -207,21 +209,28 @@ public class EditProfileActivity extends AppCompatActivity {
         MultipartBody.Part id = MultipartBody.Part.createFormData("id", PreferenceHelper.loadId(mContext));
         MultipartBody.Part pw = MultipartBody.Part.createFormData("pw", PreferenceHelper.loadPw(mContext));
 
-        ApiUtil.getAccountService().uploadProfileImage(id, pw, image).enqueue(new Callback<ApiResult>() {
+        ApiUtil.getAccountService().uploadProfileImage(id, pw, image).enqueue(new Callback<Photo>() {
             @Override
-            public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+            public void onResponse(@NonNull Call<Photo> call, @NonNull Response<Photo> response) {
                 LoadingProgressDialog.hideProgress();
                 ivEditProfileImage.setEnabled(true);
                 if (response.code() == 200) {
-                    // TODO: 2018-05-23 서버에서 받아온 데이터로 이미지 갱신해야함
-                    GlideApp.with(mContext).load(mProfileImage).into(ivProfile);
+                    Photo photo = response.body();
+                    if (photo == null) return;
+                    String profileImage = photo.getProfileImage();
+                    if (!TextUtils.isEmpty(profileImage)) {
+                        GlideApp.with(mContext).load(profileImage).error(R.drawable.ic_profile_default).into(ivProfile);
+                        Profile profile = PreferenceHelper.loadMyProfile(mContext);
+                        profile.setProfileImage(profileImage);
+                        PreferenceHelper.saveMyProfile(EditProfileActivity.this, profile);
+                    }
                 } else {
                     Toast.makeText(mContext, getString(R.string.error_common), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Photo> call, @NonNull Throwable t) {
                 LoadingProgressDialog.hideProgress();
                 ivEditProfileImage.setEnabled(true);
                 t.printStackTrace();
