@@ -27,6 +27,9 @@
         <activity
             android:name=".activity.EditProfileActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.PostUploadActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

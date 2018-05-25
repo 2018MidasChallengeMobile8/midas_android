@@ -1,5 +1,6 @@
 package com.xema.midas.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,9 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import com.xema.midas.R;
 import com.xema.midas.fragment.MyPageFragment;
+import com.xema.midas.fragment.PostFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tlMain;
     @BindView(R.id.vp_main)
     ViewPager vpMain;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -34,12 +39,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initFragment();
+        initListeners();
     }
 
     private void initFragment() {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         vpMain.setAdapter(mSectionsPagerAdapter);
         tlMain.setupWithViewPager(vpMain);
+    }
+
+    private void initListeners() {
+        ivAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PostUploadActivity.class);
+            startActivity(intent);
+        });
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -55,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (position) {
                 case 0:
-                    // TODO: 2018-05-23 리스트 화면
-                    fragment = new Fragment();
+                    fragment = new PostFragment();
                     break;
                 case 1:
                     fragment = new Fragment();

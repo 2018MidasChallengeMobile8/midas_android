@@ -18,11 +18,19 @@ import retrofit2.http.Query;
 
 @Keep
 public interface AccountService {
-    @GET("/add_user/")
-    Call<ApiResult> signUp(@Query("id") String id, @Query("pw") String password);
+    @FormUrlEncoded
+    @POST("/add_user/")
+    Call<ApiResult> signUp(@Field("id") String id, @Field("pw") String password);
 
-    @GET("/login/")
-    Call<Profile> signIn(@Query("id") String id, @Query("pw") String password);
+    @FormUrlEncoded
+    @POST("/login/")
+    Call<Profile> signIn(@Field("id") String id, @Field("pw") String password);
+
+    // TODO: 2018-05-25
+    //회원 탈퇴
+    @FormUrlEncoded
+    @POST("remove_user")
+    Call<ApiResult> dropAccount(@Field("id") String id, @Field("pw") String password);
 
     @Multipart
     @POST("/change_profile_image/")

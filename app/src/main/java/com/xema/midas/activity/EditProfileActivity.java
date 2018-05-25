@@ -60,8 +60,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private File mProfileImage;
     private Context mContext;
 
-    private final static int GALLERY_REQUEST_CODE_PROFILE = 203;
-    private final static int CROP_REQUEST_CODE_PROFILE = 303;
+    private final static int GALLERY_REQUEST_CODE = 203;
+    private final static int CROP_REQUEST_CODE = 303;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void attemptEditProfileImage(View view) {
         if (PermissionUtil.checkAndRequestPermission(this, PermissionUtil.PERMISSION_GALLERY, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            startGallery(GALLERY_REQUEST_CODE_PROFILE);
+            startGallery(GALLERY_REQUEST_CODE);
         }
     }
 
@@ -143,7 +143,7 @@ public class EditProfileActivity extends AppCompatActivity {
         switch (requestCode) {
             case PermissionUtil.PERMISSION_GALLERY:
                 if (PermissionUtil.verifyPermissions(grantResults)) {
-                    startGallery(GALLERY_REQUEST_CODE_PROFILE);
+                    startGallery(GALLERY_REQUEST_CODE);
                 } else {
                     PermissionUtil.showRationalDialog(mContext, getString(R.string.permission_need_permission));
                 }
@@ -168,9 +168,9 @@ public class EditProfileActivity extends AppCompatActivity {
         options.setCompressionQuality(90);
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
 
-        if (requestCode == GALLERY_REQUEST_CODE_PROFILE) {
+        if (requestCode == GALLERY_REQUEST_CODE) {
             mProfileImage = new File(mContext.getCacheDir(), System.currentTimeMillis() + "_crop");
-            UCrop.of(originalUri, Uri.fromFile(mProfileImage)).withOptions(options).withAspectRatio(1, 1).withMaxResultSize(500, 500).start(this, CROP_REQUEST_CODE_PROFILE);
+            UCrop.of(originalUri, Uri.fromFile(mProfileImage)).withOptions(options).withAspectRatio(1, 1).withMaxResultSize(500, 500).start(this, CROP_REQUEST_CODE);
         }
     }
 
@@ -178,13 +178,13 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if ((requestCode == GALLERY_REQUEST_CODE_PROFILE) && (resultCode == RESULT_OK) && data != null) {
+        if ((requestCode == GALLERY_REQUEST_CODE) && (resultCode == RESULT_OK) && data != null) {
             if (data.getData() != null) {
                 startCrop(data.getData(), requestCode);
             } else {
                 Toast.makeText(mContext, getString(R.string.error_common), Toast.LENGTH_SHORT).show();
             }
-        } else if ((requestCode == CROP_REQUEST_CODE_PROFILE) && (resultCode == RESULT_OK)) {
+        } else if ((requestCode == CROP_REQUEST_CODE) && (resultCode == RESULT_OK)) {
             //final Uri resultUri = UCrop.getOutput(data);
             uploadProfileImage();
         } else if (resultCode == UCrop.RESULT_ERROR) {
