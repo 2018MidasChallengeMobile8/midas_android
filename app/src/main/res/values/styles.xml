@@ -17,6 +17,6 @@
     </style>
 
     <style name="FloatingActionButtonStyle">
-        <item name="colorAccent">@color/colorGray1</item>
+        <item name="colorAccent">@color/colorRed2</item>
     </style>
 </resources>

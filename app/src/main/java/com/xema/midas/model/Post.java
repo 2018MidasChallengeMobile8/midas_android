@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Post {
     private int id;
     private String title;
-    private String user;//user idx
+    private int user;//user idx
     @SerializedName("photo_url")
     private String image;
     private String text;
@@ -31,11 +31,11 @@ public class Post {
         this.title = title;
     }
 
-    public String getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(int user) {
         this.user = user;
     }
 

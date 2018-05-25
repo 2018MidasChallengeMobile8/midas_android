@@ -3,6 +3,7 @@ package com.xema.midas.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tlMain;
     @BindView(R.id.vp_main)
     ViewPager vpMain;
-    @BindView(R.id.iv_add)
-    ImageView ivAdd;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -46,10 +47,29 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         vpMain.setAdapter(mSectionsPagerAdapter);
         tlMain.setupWithViewPager(vpMain);
+
+        vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 0) {
+                    fabAdd.show();
+                } else {
+                    fabAdd.hide();
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private void initListeners() {
-        ivAdd.setOnClickListener(v -> {
+        fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, PostUploadActivity.class);
             startActivity(intent);
         });

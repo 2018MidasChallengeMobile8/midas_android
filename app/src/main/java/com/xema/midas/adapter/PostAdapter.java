@@ -1,5 +1,6 @@
 package com.xema.midas.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.xema.midas.R;
 import com.xema.midas.common.GlideRequests;
+import com.xema.midas.common.PreferenceHelper;
 import com.xema.midas.model.Post;
+import com.xema.midas.model.Profile;
 
 import java.util.List;
 
@@ -48,10 +52,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ListItemViewHo
         holder.tvTitle.setText(post.getTitle());
         holder.tvDate.setText(post.getDate());
         mGlideRequest.load(post.getImage()).into(holder.ivImage);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Profile profile = PreferenceHelper.loadMyProfile(mContext);
+                if (profile == null) return false;
+
+                if (profile.getId() == post.getUser()) {
+                    android.support.v7.widget.PopupMenu menu = new android.support.v7.widget.PopupMenu(mContext, holder.itemView);
+                    ((Activity) mContext).getMenuInflater().inflate(R.menu.menu_delete, menu.getMenu());
+                    menu.setOnMenuItemClickListener(item -> {
+                        if (item.getItemId() == R.id.menu_delete) {
+                            attemptDeletePost(post, position);
+                        }
+                        return false;
+                    });
+                }
+                return false;
+            }
+        });
     }
 
     private void attemptDeletePost(Post post, int pos) {
-        // TODO: 2018-05-25
+        // TODO: 2018-05-25 게시물 삭제
     }
 
     @Override
