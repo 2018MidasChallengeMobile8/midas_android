@@ -63,4 +63,10 @@ public class PreferenceHelper {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREF_KEY_LOCAL, MODE_PRIVATE);
         return preferences.getBoolean(Constants.PREF_KEY_LOCAL_AUTO_SIGN_IN, false);
     }
+
+    public static void resetAll(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constants.PREF_KEY_LOCAL, MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = preferences.edit();
+        prefsEditor.clear().apply();
+    }
 }

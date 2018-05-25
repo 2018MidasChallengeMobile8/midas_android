@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.xema.midas.R;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager vpMain;
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
+    @BindView(R.id.iv_setting)
+    ImageView ivSetting;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -51,15 +54,21 @@ public class MainActivity extends AppCompatActivity {
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
                 if (position == 0) {
                     fabAdd.show();
                 } else {
                     fabAdd.hide();
                 }
-            }
 
-            @Override
-            public void onPageSelected(int position) {
+                if (position == 3) {
+                    ivSetting.setVisibility(View.VISIBLE);
+                } else {
+                    ivSetting.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -71,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
     private void initListeners() {
         fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, PostUploadActivity.class);
+            startActivity(intent);
+        });
+        ivSetting.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
         });
     }

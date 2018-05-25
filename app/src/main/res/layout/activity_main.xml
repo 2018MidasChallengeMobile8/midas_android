@@ -15,16 +15,15 @@
             android:background="@color/colorBlack"
             app:contentInsetStart="0dp">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
 
                 <com.xema.midas.widget.FontTextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:text="MIDAS"
                     android:textColor="@color/colorWhite"
@@ -32,7 +31,17 @@
                     app:font_name="daum_sb.ttf"
                     tools:ignore="SpUsage" />
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="14dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_settings_white"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
