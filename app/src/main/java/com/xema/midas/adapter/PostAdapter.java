@@ -10,17 +10,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xema.midas.R;
 import com.xema.midas.common.GlideRequests;
 import com.xema.midas.common.PreferenceHelper;
+import com.xema.midas.model.ApiResult;
 import com.xema.midas.model.Post;
 import com.xema.midas.model.Profile;
+import com.xema.midas.network.ApiUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ListItemViewHolder> {
     private static final String TAG = PostAdapter.class.getSimpleName();
@@ -59,8 +65,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ListItemViewHo
                 Profile profile = PreferenceHelper.loadMyProfile(mContext);
                 if (profile == null) return false;
 
-                if (profile.getId() == post.getUser()) {
-                    android.support.v7.widget.PopupMenu menu = new android.support.v7.widget.PopupMenu(mContext, holder.itemView);
+                if (profile.getUid() == post.getProfile().getUid()) {
+                    PopupMenu menu = new PopupMenu(mContext, holder.itemView);
                     ((Activity) mContext).getMenuInflater().inflate(R.menu.menu_delete, menu.getMenu());
                     menu.setOnMenuItemClickListener(item -> {
                         if (item.getItemId() == R.id.menu_delete) {
@@ -68,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ListItemViewHo
                         }
                         return false;
                     });
+                    menu.show();
                 }
                 return false;
             }
@@ -75,7 +82,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ListItemViewHo
     }
 
     private void attemptDeletePost(Post post, int pos) {
-        // TODO: 2018-05-25 게시물 삭제
+        ApiUtil.getPostService().deletePost(PreferenceHelper.loadId(mContext), PreferenceHelper.loadPw(mContext), post.getId()).enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResult> call, Response<ApiResult> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(mContext, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    mDataList.remove(pos);
+                    notifyItemRemoved(pos);
+                    notifyItemRangeChanged(pos, getItemCount());
+                }else {
+                    Toast.makeText(mContext, mContext.getString(R.string.error_common), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
+                Toast.makeText(mContext, mContext.getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

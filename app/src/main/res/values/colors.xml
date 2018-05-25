@@ -23,7 +23,16 @@
 
     <color name="colorBlue">#4A90E2</color>
     <color name="colorBlueGray">#809AAA</color>
+    <color name="colorBlueGray2">#b0bec5</color>
 
     <color name="colorRed">#d90b0b</color>
     <color name="colorRed2">#E92964</color>
+
+    <color name="colorNavy">#444A58</color>
+    <color name="colorNavy2">#3A404E</color>
+
+    <color name="colorTeal">#37474f</color>
+    <color name="colorTeal2">#17262d</color>
+
+    <color name="colorOrangeDark">#C8AD80</color>
 </resources>

@@ -22,4 +22,6 @@ Elit at imperdiet dui accumsan. Consequat nisl vel pretium lectus quam id leo in
     <string name="permission_need_permission">권한이 필요합니다.</string>
 
     <string name="title_crop_image">사진 자르기</string>
+
+    <string name="new_account_en">NEW\nACCOUNT</string>
 </resources>

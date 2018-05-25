@@ -100,10 +100,10 @@ public class PostFragment extends Fragment {
 
         LoadingProgressDialog.showProgress(mContext);
 
-        ApiUtil.getPostService().getPostList(20, lastPostId).enqueue(new Callback<List<Post>>() {
+        ApiUtil.getPostService().getPostList(2, lastPostId).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
-                srlMain.setRefreshing(false);
+                if (srlMain!=null)srlMain.setRefreshing(false);
                 LoadingProgressDialog.hideProgress();
                 if (response.code() == 200) {
                     List<Post> list = response.body();
@@ -118,7 +118,7 @@ public class PostFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
-                srlMain.setRefreshing(false);
+                if (srlMain!=null)srlMain.setRefreshing(false);
                 LoadingProgressDialog.hideProgress();
                 Toast.makeText(mContext, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
             }

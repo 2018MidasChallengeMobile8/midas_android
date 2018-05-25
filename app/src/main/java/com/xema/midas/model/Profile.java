@@ -11,7 +11,7 @@ public class Profile {
     @SerializedName("photo_url")
     private String profileImage;
     private String comment;
-    private int id;//user pk
+    private int uid;//user pk
 
     public String getName() {
         return name;
@@ -37,11 +37,11 @@ public class Profile {
         this.comment = comment;
     }
 
-    public int getId() {
-        return id;
+    public int getUid() {
+        return uid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }

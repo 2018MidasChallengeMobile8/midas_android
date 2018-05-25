@@ -5,27 +5,28 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.xema.midas.R;
+import com.xema.midas.common.GlideApp;
 import com.xema.midas.common.PreferenceHelper;
 import com.xema.midas.model.ApiResult;
 import com.xema.midas.model.Profile;
 import com.xema.midas.network.ApiUtil;
-import com.xema.midas.util.CommonUtils;
 import com.xema.midas.util.LoadingProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,12 +47,16 @@ public class SignInActivity extends AppCompatActivity {
     TextView tvHelpRight;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
+    @BindView(R.id.iv_background)
+    ImageView ivBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
+
+        GlideApp.with(this).load(R.drawable.img_background).override(200, 600).apply(RequestOptions.bitmapTransform(new BlurTransformation(8))).into(ivBackground);
 
         initListeners();
 
@@ -70,6 +75,7 @@ public class SignInActivity extends AppCompatActivity {
     private void initListeners() {
         llBottom.setOnClickListener(this::convertPageMode);
         btnAction.setOnClickListener(this::attemptAction);
+        /*
         edtId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,6 +112,7 @@ public class SignInActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 
     private void changeSignInButton(boolean enable) {
