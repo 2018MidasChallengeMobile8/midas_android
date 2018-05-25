@@ -23,6 +23,7 @@ import com.xema.midas.model.ApiResult;
 import com.xema.midas.model.Profile;
 import com.xema.midas.network.ApiUtil;
 import com.xema.midas.util.LoadingProgressDialog;
+import com.xema.midas.widget.FontTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +50,10 @@ public class SignInActivity extends AppCompatActivity {
     LinearLayout llBottom;
     @BindView(R.id.iv_background)
     ImageView ivBackground;
+    @BindView(R.id.tv_login)
+    FontTextView tvLogin;
+    @BindView(R.id.tv_new_account)
+    FontTextView tvNewAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +120,7 @@ public class SignInActivity extends AppCompatActivity {
         */
     }
 
+    /*
     private void changeSignInButton(boolean enable) {
         btnAction.setEnabled(enable);
         if (enable) {
@@ -123,6 +129,7 @@ public class SignInActivity extends AppCompatActivity {
             btnAction.setTextColor(ContextCompat.getColor(this, R.color.colorBlue));
         }
     }
+    */
 
     private void attemptAction(View view) {
         String id = edtId.getText().toString();
@@ -208,8 +215,10 @@ public class SignInActivity extends AppCompatActivity {
         edtId.setText("");
         edtId.requestFocus();
 
+        tvLogin.setVisibility(View.GONE);
+        tvNewAccount.setVisibility(View.VISIBLE);
         cbAutoSignIn.setVisibility(View.GONE);
-        btnAction.setText(getString(R.string.common_sign_up));
+        btnAction.setText("SIGN UP");
         tvHelpLeft.setText("이미 계정이 있으신가요?");
         tvHelpRight.setText("로그인하기.");
     }
@@ -219,8 +228,10 @@ public class SignInActivity extends AppCompatActivity {
         edtId.setText("");
         edtId.requestFocus();
 
+        tvNewAccount.setVisibility(View.GONE);
+        tvLogin.setVisibility(View.VISIBLE);
         cbAutoSignIn.setVisibility(View.VISIBLE);
-        btnAction.setText(getString(R.string.common_sign_in));
+        btnAction.setText("GO");
         tvHelpLeft.setText("계정이 없으신가요?");
         tvHelpRight.setText("가입하기.");
     }
